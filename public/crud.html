@@ -19,6 +19,12 @@
       </li>
     </script>
 
+     <script id="commentsTemplate" type="text/html">
+      <li>
+        <b><span data-bind="text: content"/></b>
+      </li>
+    </script>
+
     <!-- /// 2 -->
     <script id="indexTemplate" type="text/html">
       <tr>
@@ -59,13 +65,16 @@
         <span data-bind="text: likes"></span>
       </p>
       <p>
+
         <!-- /// 6 -->
         <a data-bind="click: function() { viewModel.indexAction() }">Back</a>
         <a data-bind="click: function() { viewModel.editAction($data) }">Edit</a>
         <button data-bind="click: function() { viewModel.tryAction($data) }">Tried</button>
       </p>
     </script>
+    
 
+    
     <!-- /// 7 -->
     <script id="editTemplate" type="text/html">
       <form id="form">
@@ -139,6 +148,8 @@
     <div data-bind='visible: currentPage() == "show"'>
       <div data-bind='template: {name: "showTemplate",  data: tempItem, templateOptions: { selectedItem: selectedItem}}'></div>
     </div>
+
+    <ul data-bind='template: {name: "commentsTemplate", foreach: comments}'></ul>
 
     <!-- /// 13 -->
     <div data-bind='visible: currentPage() == "edit"'>

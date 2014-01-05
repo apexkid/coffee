@@ -9,6 +9,8 @@ var viewModel = {
   errors: ko.observableArray(),
   // /// 5
   items: ko.observableArray(),
+
+  comments: ko.observableArray(),
   // /// 6
   selectedItem: ko.observable(),
   // /// 7
@@ -69,6 +71,10 @@ var viewModel = {
     this.errors([]);
     this.selectedItem(itemToShow);
     this.prepareTempItem();
+    var url = '/posts/' + itemToShow.id + '/comments.json';
+    $.getJSON(url, function(data) {
+      viewModel.comments(data);
+    });
     this.currentPage('show');
     this.shownOnce(true);
   },
@@ -112,6 +118,7 @@ var viewModel = {
 
   tryAction: function(itemToUpdate) {
     itemToUpdate.likes(itemToUpdate.likes() + 1);
+    var temp = 0;
     var json_data = ko.toJS(itemToUpdate);
     delete json_data.id;
     delete json_data.created_at;
@@ -128,6 +135,7 @@ var viewModel = {
         viewModel.errors([]);
         viewModel.setFlash('Coffee successfully tried');
         viewModel.showAction(updatedItem);
+        this.temp(1);
       },
       error: function(msg) {
         viewModel.errors(JSON.parse(msg.responseText));
