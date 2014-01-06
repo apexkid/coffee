@@ -65,15 +65,16 @@
         <span data-bind="text: likes"></span>
       </p>
       <p>
-
         <!-- /// 6 -->
         <a data-bind="click: function() { viewModel.indexAction() }">Back</a>
         <a data-bind="click: function() { viewModel.editAction($data) }">Edit</a>
         <button data-bind="click: function() { viewModel.tryAction($data) }">Tried</button>
       </p>
+
+      <input data-bind="value: viewModel.newcontent"  />
+      <button data-bind="click: function() { viewModel.addComment() }"> Add comment </button>
     </script>
     
-
     
     <!-- /// 7 -->
     <script id="editTemplate" type="text/html">

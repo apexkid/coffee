@@ -14,6 +14,10 @@ var viewModel = {
   // /// 6
   selectedItem: ko.observable(),
   // /// 7
+  newcontent: ko.observable(),
+
+  beanid: ko.observable(0),
+
   tempItem: {
     id: ko.observable(),
     title: ko.observable(),
@@ -24,6 +28,41 @@ var viewModel = {
     created_at: ko.observable()
   },
 
+  tempComment: {
+    content: ko.observable(),
+  },
+
+  newcomment: {
+    post_id: "",
+    content: ""
+  },
+
+  newCommentContent: ko.observable(),
+
+  addComment: function() {
+    this.newcomment.post_id = this.beanid();
+    this.newcomment.content = this.newcontent();
+    var json_data = ko.toJS(this.newcomment);
+    json_data.post_id = 2;
+    json_data.content = "vkfhvnkjdkvd vjfdmv";
+    $.ajax({
+      type: 'POST',
+      url: '/posts/' + this.beanid() + '/comments.json',
+      data: {
+        // /// 17
+        post: json_data
+      },
+      dataType: "json",
+      success: function(createdItem) {
+        viewModel.errors([]);
+        viewModel.setFlash('Comment successfully created.');
+      },
+      error: function(msg) {
+        viewModel.errors(JSON.parse(msg.responseText));
+      }
+    });
+    alert("id" + this.newcomment.post_id + " " + json_data.content + " comm   " + this.newcontent());
+  },
   // /// 8
   setFlash: function(flash) {
     this.flash(flash);
@@ -45,6 +84,10 @@ var viewModel = {
     this.tempItem.updated_at('');
     this.tempItem.created_at('');
   },
+
+  clearComments: function() {
+    this.comments('');
+  },
   // /// 11
   prepareTempItem : function() {
     this.tempItem.id(ko.utils.unwrapObservable(this.selectedItem().id));
@@ -58,6 +101,7 @@ var viewModel = {
   // /// 12
   indexAction: function() {
     this.checkFlash();
+    this.clearComments();
     $.getJSON('/posts.json', function(data) {
       viewModel.items(data);
       viewModel.currentPage('index');
@@ -77,6 +121,7 @@ var viewModel = {
     });
     this.currentPage('show');
     this.shownOnce(true);
+    this.beanid(itemToShow.id);
   },
   // /// 14
   newAction: function() {
