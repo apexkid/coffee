@@ -18,6 +18,8 @@ var viewModel = {
 
   beanid: ko.observable(0),
 
+  filter: ko.observable(""),
+
   tempItem: {
     id: ko.observable(),
     title: ko.observable(),
@@ -80,6 +82,7 @@ var viewModel = {
       viewModel.shownOnce(true);
     });
   },
+
 
   // /// 13
   showAction: function(itemToShow) {
@@ -228,6 +231,25 @@ var viewModel = {
     }
   }
 };
+
+ko.utils.stringStartsWith = function (string, startsWith) {         
+  string = string || "";
+  if (startsWith.length > string.length)
+      return false;
+  return string.substring(0, startsWith.length) === startsWith;
+};
+
+viewModel.filteredItems = ko.computed(function() {
+    var filter = this.filter().toLowerCase();
+    if (!filter) {
+        return this.items();
+    } else {
+        return ko.utils.arrayFilter(this.items(), function(item) {
+            return ko.utils.stringStartsWith(item.title.toLowerCase(), filter);
+        });
+    }
+}, viewModel);
+
 
 // /// 20
 $(document).ready(function() {
