@@ -33,32 +33,6 @@ var viewModel = {
     content: ""
   },
 
-
-  addComment: function() {
-    this.newcomment.post_id = this.beanid();
-    this.newcomment.content = this.newcontent();
-    var json_data = ko.toJS(this.newcomment);
-    
-    $.ajax({
-      type: 'POST',
-      url: '/posts/' + this.beanid() + '/comments.json',
-      data: {
-        // /// 17
-        comment: json_data
-      },
-      dataType: "json",
-      success: function(createdItem) {
-        viewModel.errors([]);
-        viewModel.setFlash('Comment successfully created.');
-      },
-      error: function(msg) {
-        viewModel.errors(JSON.parse(msg.responseText));
-      }
-    });
-    viewModel.comments.push(this.newcomment);
-    this.currentPage('show');
-    this.shownOnce(true);
-  },
   // /// 8
   setFlash: function(flash) {
     this.flash(flash);
@@ -97,6 +71,8 @@ var viewModel = {
   // /// 12
   indexAction: function() {
     this.checkFlash();
+    this.errors([]);
+    this.flash('');
     this.clearComments();
     $.getJSON('/posts.json', function(data) {
       viewModel.items(data);
@@ -109,6 +85,7 @@ var viewModel = {
   showAction: function(itemToShow) {
     this.checkFlash();
     this.errors([]);
+    this.newcontent('');
     this.selectedItem(itemToShow);
     this.prepareTempItem();
     var url = '/posts/' + itemToShow.id + '/comments.json';
@@ -134,6 +111,31 @@ var viewModel = {
     this.currentPage('edit');
     this.shownOnce(true);
   },
+
+  addComment: function() {
+    this.newcomment.post_id = this.beanid();
+    this.newcomment.content = this.newcontent();
+    var json_data = ko.toJS(this.newcomment);
+    
+    $.ajax({
+      type: 'POST',
+      url: '/posts/' + this.beanid() + '/comments.json',
+      data: {
+        // /// 17
+        comment: json_data
+      },
+      dataType: "json",
+      success: function(createdItem) {
+        viewModel.errors([]);
+        viewModel.setFlash('Comment successfully created.');
+        viewModel.comments.push(viewModel.newcomment);
+        viewModel.newcontent('');
+      },
+      error: function(msg) {
+        viewModel.errors(JSON.parse(msg.responseText));
+      }
+    });
+  },
   // /// 16
   createAction: function(itemToCreate) {
     var json_data = ko.toJS(itemToCreate);
@@ -148,7 +150,6 @@ var viewModel = {
       success: function(createdItem) {
         viewModel.errors([]);
         viewModel.setFlash('Post successfully created.');
-        viewModel.clearTempItem();
         viewModel.showAction(createdItem);
       },
       error: function(msg) {
