@@ -18,6 +18,8 @@ var viewModel = {
 
   beanid: ko.observable(0),
 
+  searchQuery: ko.observable("dsad"),
+
   tempItem: {
     id: ko.observable(),
     title: ko.observable(),
@@ -38,6 +40,8 @@ var viewModel = {
   },
 
   newCommentContent: ko.observable(),
+
+  
 
   addComment: function() {
     this.newcomment.post_id = this.beanid();
