@@ -28,16 +28,11 @@ var viewModel = {
     created_at: ko.observable()
   },
 
-  tempComment: {
-    content: ko.observable(),
-  },
-
   newcomment: {
     post_id: "",
     content: ""
   },
 
-  newCommentContent: ko.observable(),
 
   addComment: function() {
     this.newcomment.post_id = this.beanid();
@@ -60,6 +55,7 @@ var viewModel = {
         viewModel.errors(JSON.parse(msg.responseText));
       }
     });
+    viewModel.comments.push(this.newcomment);
     this.currentPage('show');
     this.shownOnce(true);
   },
