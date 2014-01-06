@@ -43,14 +43,13 @@ var viewModel = {
     this.newcomment.post_id = this.beanid();
     this.newcomment.content = this.newcontent();
     var json_data = ko.toJS(this.newcomment);
-    json_data.post_id = 2;
-    json_data.content = "vkfhvnkjdkvd vjfdmv";
+    
     $.ajax({
       type: 'POST',
       url: '/posts/' + this.beanid() + '/comments.json',
       data: {
         // /// 17
-        post: json_data
+        comment: json_data
       },
       dataType: "json",
       success: function(createdItem) {
@@ -61,7 +60,8 @@ var viewModel = {
         viewModel.errors(JSON.parse(msg.responseText));
       }
     });
-    alert("id" + this.newcomment.post_id + " " + json_data.content + " comm   " + this.newcontent());
+    this.currentPage('show');
+    this.shownOnce(true);
   },
   // /// 8
   setFlash: function(flash) {

@@ -71,7 +71,11 @@
         <button data-bind="click: function() { viewModel.tryAction($data) }">Tried</button>
       </p>
 
-      <input data-bind="value: viewModel.newcontent"  />
+      <form id="form">
+        <div class="field">
+        <label for="comment_content">Write your comment</label><br />
+        <input id="comment_content" data-bind="value: viewModel.newcontent"  />
+      </form>
       <button data-bind="click: function() { viewModel.addComment() }"> Add comment </button>
     </script>
     

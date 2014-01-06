@@ -19,8 +19,10 @@ class CommentsController < ApplicationController
 
 	def create
 		@post = Post.find_by_id(params[:post_id])
-		@comment = @post.comments.build(params[:comment])
+		#@comment = @post.comments.build(params[:comment])
 
+    @comment = Comment.new(params[:comment]);
+    @comment.post_id = @post.id;
     	respond_to do |format|
       		if @comment.save
         		format.html { redirect_to(@post, :notice => 'Comment was successfully added') }
