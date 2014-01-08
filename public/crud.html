@@ -15,33 +15,29 @@
   <body style="background:#eee;">
     <div class="mainContainer well">
       <div class="header">
-        <h1 > Hello world! - Coffee </h1>
+        <h1 style="margin-top:30px;"> Hello 'Coffee' World </h1>
+        <h5> Sample App developed using Knockout.js in Rails </h6>
       </div>
       <!-- /// 1 -->
       <script id="errorsTemplate" type="text/html">
-              
-               <span style="color:#ee5f5b;" data-bind="text: $data"></span>.&nbsp;
-            
+         <span style="color:#ee5f5b;" data-bind="text: $data"></span>.&nbsp;    
       </script>
       
       <script id="commentsTemplate" type="text/html">
         <div class="comment">
-        <img src="images/commentIcon.jpg" style="float:left; width:20px; height:20px;" />
-        <p data-bind="text: content"/></p>
-        <hr style="border-bottom:1px solid #ccc;"/>
+          <img src="images/commentIcon.jpg" style="float:left; width:20px; height:20px;" />
+          <p data-bind="text: content"/></p>
+          <hr style="border-bottom:1px solid #ccc;"/>
         </div>
-    
-    </script>
+      </script>
       <!-- /// 2 -->
       <script id="indexTemplate" type="text/html">
         
-         <a >
+        <a>
          <div class="span3 beanHolder" >
-           <div class="beanTitle" >
+            <div class="beanTitle" >
               <img src="images/delete.jpg" style="width:12px; height:12px; float:right; margin-top:10px" data-bind="click: function() { viewModel.destroyAction($data) }" />
-               <h4 data-bind="text: title"> </h4>
-
-              
+               <h4 data-bind="text: title"> </h4>  
             </div>
             <div class="beanTries" data-bind="click: function() { viewModel.showAction($data) }">
               <div class="row">
@@ -55,37 +51,36 @@
                 <div class="span2 loc"><h4 data-bind="text: country"></h4></div>
               </div>
             </div>
-        </div>
-        </a>
-        
+          </div>
+        </a>  
       </script>
 
       <!-- /// 5 -->
       <script id="showTemplate" type="text/html">
-        <div class="beanShow"  >
+        <div class="beanShow">
           <img src="images/back.png" data-bind="click: function() { viewModel.indexAction() }" />
           <div style="margin-bottom:10px;" class="row" >
             <div class="imgHolder span3" >
               <img class="imgMedium" src="images/coffeebg.jpg" />
             </div>
+            
             <div class="beanDesc span5" >
-                <div data-bind="click: function() { viewModel.editAction($data) }" title="Click to Edit">
-                  <h2><span data-bind="text: title"></span></h2>
-                  <p><span data-bind="text: body"></span></p>
-                  <div class="">
-                    <div class="row">
-                        <div class="row span3">
-                          <div class="span1"> <img class="imgSmall" src="images/location.jpg" /></div>
-                          <div class="span2 loc"><h4 data-bind="text: country"></h4></div>
-                        </div>
-                        <div class="span2" style="margin-top:10px;">
-                          <b><span class="tries" data-bind="text: likes"></span> </b><span>Tried This</span>
-                        </div>
+              <div data-bind="click: function() { viewModel.editAction($data) }" title="Click to Edit">
+                <h2><span data-bind="text: title"></span></h2>
+                <p><span data-bind="text: body"></span></p>
+                <div class="">
+                  <div class="row">
+                    <div class="row span3">
+                      <div class="span1"> <img class="imgSmall" src="images/location.jpg" /></div>
+                      <div class="span2 loc"><h4 data-bind="text: country"></h4></div>
+                    </div>
+                    <div class="span2" style="margin-top:10px;">
+                      <b><span class="tries" data-bind="text: likes"></span> </b><span>Tried This</span>
                     </div>
                   </div>
                 </div>
-               <button class="btn btn-info" data-bind="click: function() { viewModel.tryAction($data) }">I Have Tried </button>
-              
+              </div>
+              <button class="btn btn-info" data-bind="click: function() { viewModel.tryAction($data) }">I Have Tried </button>
             </div>
           
           </div>
@@ -94,11 +89,10 @@
               <div class="comment">
                 <form id="form">
                   <div>
-                    
-                      <input type="text" id="comment_content" data-bind="value: viewModel.newcontent"  placeholder="Write Your Comment"/>
-                    </form>
+                    <input type="text" id="comment_content" data-bind="value: viewModel.newcontent"  placeholder="Write Your Comment"/>
                      <button class="btn btn-success" data-bind="click: function() { viewModel.addComment() }"> Add comment </button>
                   </div>
+                </form>
               </div>
             </div>  
 
@@ -129,7 +123,7 @@
           <div>
             <button class="btn btn-info" data-bind="click: function() { viewModel.updateAction($data) }">Update
             </button>
-            <a data-bind="click: function() { viewModel.showAction($item.selectedItem()) }"><button class="btn" >Cancel</button></a>
+            <button class="btn" data-bind="click: function() { viewModel.indexAction() }" >Cancel</button>
           </div>
         </div>
          
@@ -160,7 +154,7 @@
           <div>
             <button class="btn btn-info" data-bind="click: function() { viewModel.createAction($data) }">Create
             </button>
-            <a data-bind="click: function() { viewModel.indexAction() }"><button class="btn" >Cancel</button></a>
+            <button class="btn" data-bind="click: function() { viewModel.indexAction() }">Cancel</button>
           </div>
         </div>
       </script>
@@ -175,7 +169,7 @@
       </div>
       <!-- /// 11 -->
       <div data-bind='visible: currentPage() == "index"'>
-        <a data-bind='click: function() { viewModel.newAction() }'><button style="margin-top:20px;" class="btn btn-info"> Add Coffee Bean</button></a>
+        <button style="margin-top:20px;" class="btn btn-info" data-bind='click: function() { viewModel.newAction() }'> Add Coffee Bean</button>
         <input style="float:right; margin-top:20px;" type="text" class="search" data-bind="value :filter, valueUpdate: 'afterkeydown'" placeholder="Type to Search"/>
         <br />
         
@@ -191,6 +185,7 @@
       <!-- /// 12 -->
       <div data-bind='visible: currentPage() == "show"'>
         <div data-bind='template: {name: "showTemplate",  data: tempItem, templateOptions: { selectedItem: selectedItem}}'></div>
+
          <div class="commentHolder" data-bind='template: {name: "commentsTemplate", foreach: comments}'></div>
       </div>
        
@@ -203,6 +198,7 @@
       <div data-bind='visible: currentPage() == "new"'>
         <div data-bind='template: {name: "newTemplate", data: tempItem}'></div>
       </div>
-    </div>  
+    </div>
+   </div> 
   </body>
 </html>
